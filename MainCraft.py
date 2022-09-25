@@ -7,6 +7,7 @@ class MainCraft(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load('assets/pixel_ship_yellow.png').convert_alpha()
         self.rect = self.image.get_rect(center=(375, 550))
+        self.mask = pygame.mask.from_surface(self.image)
         self.speed = speed
         self.previous_time = 0
         self.current_time = 0

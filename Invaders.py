@@ -17,7 +17,7 @@ class Invader(pygame.sprite.Sprite):
             self.rect = self.image.get_rect(bottomleft= (x,y))
 
 
-
+        self.mask = pygame.mask.from_surface(self.image)
         self.lasers = pygame.sprite.Group()
         self.direction = -1
         self.pace_size = pace

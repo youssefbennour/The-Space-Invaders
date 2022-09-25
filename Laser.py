@@ -16,6 +16,7 @@ class Laser(pygame.sprite.Sprite):
             self.image = pygame.image.load('assets/pixel_laser_green.png').convert_alpha()
             self.rect = self.image.get_rect(topleft=(x,y))
 
+        self.mask = pygame.mask.from_surface(self.image)
 
     def destroy_laser(self):
         self.kill()

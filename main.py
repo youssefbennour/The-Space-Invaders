@@ -2,11 +2,11 @@ from Imports import *
 
 #functions
 def collision():
-    if pygame.sprite.spritecollide(craft.sprite, lasers_group, True) or pygame.sprite.spritecollide(craft.sprite, invaders_group, False):
+    if pygame.sprite.spritecollide(craft.sprite, lasers_group, True, pygame.sprite.collide_mask) or pygame.sprite.spritecollide(craft.sprite, invaders_group, False, pygame.sprite.collide_mask):
         print("collision")
     if craft.sprite.lasers:
         for laser in craft.sprite.lasers:
-           if pygame.sprite.spritecollide(laser, invaders_group, True):
+           if pygame.sprite.spritecollide(laser, invaders_group, True, pygame.sprite.collide_mask):
                 laser.destroy_laser()
                 print("it did collide")
 
