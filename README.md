@@ -1,2 +1,3 @@
 # The-Space-Invaders
-Space Invaders game built using python
+This is game is build using Pygame.  
+Credits for assets: TechWithTim youtube channel.
