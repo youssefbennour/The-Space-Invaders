@@ -23,6 +23,18 @@ def collision():
             if invader.rect.top>= 650:
                 lives -= 1
 
+def generate_enemies(fromY, toY):
+    invaders_group.add(Invader(randint(50, 150), randint(-fromY, -toY)))
+    invaders_group.add(Invader(randint(250, 350), randint(-fromY, -toY)))
+    invaders_group.add(Invader(randint(400, 600), randint(-fromY, -toY)))
+    fromY += 100
+    toY += 100
+    if fromY%maxPosInterval[0]:
+        fromY= 100
+    if toY%maxPosInterval[1]:
+        toY = 0
+    return fromY, toY
+
 def display_score(lives):
     score_surface = secondaryFont.render("lives: "+str(lives), False, (255,255,255))
     score_rect =  score_surface.get_rect(topright=(WIDTH,0))
@@ -75,6 +87,10 @@ invader_shoot_timer = 0
 
 game_active = False
 try_again = False
+
+fromY = 100
+toY = 0
+maxPosInterval = [500, 400]
 while True:
     for event in pygame.event.get():
         current_time = pygame.time.get_ticks()
@@ -84,9 +100,7 @@ while True:
         if game_active:
 
             if event.type == invaders_timer:
-                invaders_group.add(Invader(randint(50, 150), randint(-500, -100)))
-                invaders_group.add(Invader(randint(250, 350), randint(-500, -100)))
-                invaders_group.add(Invader(randint(400, 600), randint(-500, -100)))
+                fromY, toY = generate_enemies(fromY, toY)
 
             if (current_time-invader_shoot_timer)>= randint(500, 1200) and invaders_group.sprites():
                 invader_shoot_timer = current_time
