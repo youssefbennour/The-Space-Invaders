@@ -7,7 +7,6 @@ class MainCraft(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load('assets/pixel_ship_yellow.png').convert_alpha()
         self.rect = self.image.get_rect(center=(375, 550))
-        self.mask = pygame.mask.from_surface(self.image)
         self.speed = speed
         self.previous_time = 0
         self.current_time = 0
@@ -19,6 +18,7 @@ class MainCraft(pygame.sprite.Sprite):
         self.lasers.add(Laser("yellow", self.rect.x, self.rect.y+50))
         self.laser_sound_effect.play()
     def player_input(self):
+        self.current_time = pygame.time.get_ticks()
         keys = pygame.key.get_pressed()
         if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
             if self.rect.right+self.speed >= 750:
@@ -45,9 +45,8 @@ class MainCraft(pygame.sprite.Sprite):
             self.previous_time = self.current_time
 
 
-    def update(self, current_time):
+    def update(self):
         self.player_input()
-        self.current_time= current_time
         self.lasers.update()
 
 
