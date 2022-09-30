@@ -25,7 +25,8 @@ class Invader(pygame.sprite.Sprite):
         self.pace_time = 0
         self.speed = speed
         self.turn_after = randint(1,4)
-
+    def destroy_laser(self):
+        self.kill();
     def animate_invader(self):
         if self.rect.y >= 650:
             self.kill()
@@ -36,7 +37,7 @@ class Invader(pygame.sprite.Sprite):
             self.pace_count += 1
             self.rect.x += self.pace_size*self.direction
 
-            if self.pace_count%self.turn_after == 0:
+            if self.pace_count%self.turn_after == 0 or self.rect.left<0 or self.rect.right>750:
                 self.direction *= -1
                 self.pace_count = 0
                 self.pace_size = randint(1,7)
