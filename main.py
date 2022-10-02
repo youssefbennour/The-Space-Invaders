@@ -2,24 +2,7 @@ from Imports import *
 
 
 pygame.init()
-lives =  20
-class Explosi(pygame.sprite.Sprite):
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((50, 50))
-        self.image.fill((255, 255, 255))
-        pygame.draw.circle(self.image, (0, 0, 255), (25, 25), 25, 0)
-        self.rect = self.image.get_rect()
-
-    def update(self):
-        self.rect.center = pygame.mouse.get_pos()
-
-class Explosio():
-    def __init__(self, x_pos, y_pos, radius = 1):
-        self.radius = radius
-        self.x_pos =x_pos
-        self.y_pos = ŷ_pos
-
+lives =  5
 #functions
 def explosion_stuff(x,y, screen):
     explosion_group.add(Explosion(x, y, screen))
@@ -35,7 +18,7 @@ def collision():
 
     if craftInvaderCollision:
         lives -= 2
-        explosion_stuff(craft.sprite.x, craft.sprite.y, screen)
+        explosion_stuff(craft.sprite.rect.x, craft.sprite.rect.y, screen)
 
     if craft.sprite.lasers:
         for laser in craft.sprite.lasers:
@@ -75,7 +58,7 @@ def reset_game(lives, game_active, try_again):
     if lives <= 0:
         game_active = False
         try_again = True
-        lives = 30
+        lives = 5
         craft.empty()
         craft.add(MainCraft(5))
         invaders_group.empty()
