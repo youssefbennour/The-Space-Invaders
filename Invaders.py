@@ -3,7 +3,7 @@ from random import choice, randint
 from Laser import Laser
 
 class Invader(pygame.sprite.Sprite):
-    def __init__(self, x, y,pace=randint(1,7), speed=200):
+    def __init__(self, x, y,pace=randint(1,7), speed=100):
         super().__init__()
         self.invader_type = choice(['blue', 'green', 'red'])
         if self.invader_type == 'red':

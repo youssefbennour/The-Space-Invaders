@@ -1,8 +1,9 @@
 import pygame
 class Laser(pygame.sprite.Sprite):
-    def __init__(self, type, x,y):
+    def __init__(self, type, x,y, speed = 10):
         super().__init__()
         self.type = type
+        self.speed= speed
         if type == "yellow":
             self.image = pygame.image.load('assets/pixel_laser_yellow.png').convert_alpha()
             self.rect = self.image.get_rect(bottomleft=(x,y))
@@ -23,11 +24,11 @@ class Laser(pygame.sprite.Sprite):
 
     def animate_laser(self):
         if self.type == "yellow":
-            self.rect.y -= 6
+            self.rect.y -= self.speed
             if self.rect.bottom <0:
                 self.kill()
         else:
-            self.rect.y += 6
+            self.rect.y += self.speed
             if self.rect.top > 650:
                 self.kill()
 

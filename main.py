@@ -30,6 +30,9 @@ def collision():
 
     if craftInvaderCollision:
         lives -= 2
+        #prevent negative width health bar
+        if lives < 0:
+            lives = 0
         explosion_stuff(craft.sprite.rect.x, craft.sprite.rect.y, screen)
 
     if craft.sprite.lasers:
@@ -70,7 +73,7 @@ def reset_game(lives, game_active, try_again):
         try_again = True
         lives = 5
         craft.empty()
-        craft.add(MainCraft(5))
+        craft.add(MainCraft(craftSpeed))
         invaders_group.empty()
         lasers_group.empty()
     return lives, game_active, try_again
@@ -99,10 +102,13 @@ background_image = pygame.image.load(os.path.join('assets', 'background-black.pn
 background_image = pygame.transform.scale(background_image, (750, 750))
 
 clock = pygame.time.Clock()
-FramePerSecond = 60
+FramePerSecond =30
+
+
 
 craft = pygame.sprite.GroupSingle()
-craft.add(MainCraft(5))
+craftSpeed = 10
+craft.add(MainCraft(10))
 
 lasers_group = pygame.sprite.Group()
 
@@ -156,8 +162,9 @@ while True:
 
         collision()
         display_score(lives)
-        health_bar(craft.sprite.rect.bottomleft[0], craft.sprite.rect.bottomleft[1], lives )
         lives, game_active, try_again = reset_game(lives, game_active, try_again)
+
+        health_bar(craft.sprite.rect.bottomleft[0], craft.sprite.rect.bottomleft[1], lives )
 
     if  not game_active and try_again:
         screen.blit(try_again_surface, try_again_rect)
@@ -166,4 +173,4 @@ while True:
 
 
     pygame.display.update()
-    clock.tick(30)
+    clock.tick(FramePerSecond)
