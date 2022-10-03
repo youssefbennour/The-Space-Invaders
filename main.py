@@ -4,6 +4,18 @@ from Imports import *
 pygame.init()
 lives =  5
 #functions
+def health_bar(x,y,lives):
+    y += 30
+    red_surface = pygame.Surface([100,20])
+    red_rect = red_surface.get_rect(bottomleft = (x,y))
+    green_surface = pygame.Surface([lives*20,20])
+    green_rect = red_surface.get_rect(bottomleft=(x,y))
+    red_surface.fill((255,0,0))
+    green_surface.fill((0,255,0))
+    screen.blit(red_surface, red_rect)
+    screen.blit(green_surface, green_rect)
+
+
 def explosion_stuff(x,y, screen):
     explosion_group.add(Explosion(x, y, screen))
     explosion_sound.play()
@@ -31,11 +43,9 @@ def collision():
             if invader.rect.top>= 650:
                 lives -= 1
 
-
-
 fromY = 100
 toY = 0
-maxPosInterval = [500, 400]
+max_y_pos = [500, 400]
 
 def generate_enemies(fromY, toY):
     invaders_group.add(Invader(randint( 50, 150), randint(-fromY, -toY)))
@@ -43,9 +53,9 @@ def generate_enemies(fromY, toY):
     invaders_group.add(Invader(randint(400, 600), randint(-fromY, -toY)))
     fromY += 100
     toY += 100
-    if fromY%maxPosInterval[0]:
+    if fromY%max_y_pos[0]:
         fromY= 100
-    if toY%maxPosInterval[1]:
+    if toY%max_y_pos[1]:
         toY = 0
     return fromY, toY
 
@@ -68,6 +78,7 @@ def reset_game(lives, game_active, try_again):
 
 explosion_sound = pygame.mixer.Sound('assets/audio/explosion.wav')
 explosion_sound.set_volume(0.1)
+
 #main game
 WIDTH, HEIGHT = 750, 650
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -143,10 +154,11 @@ while True:
         invaders_group.update()
         invaders_group.draw(screen)
 
-
         collision()
         display_score(lives)
+        health_bar(craft.sprite.rect.bottomleft[0], craft.sprite.rect.bottomleft[1], lives )
         lives, game_active, try_again = reset_game(lives, game_active, try_again)
+
     if  not game_active and try_again:
         screen.blit(try_again_surface, try_again_rect)
     elif not game_active:
@@ -154,4 +166,4 @@ while True:
 
 
     pygame.display.update()
-    clock.tick(FramePerSecond)
+    clock.tick(30)
