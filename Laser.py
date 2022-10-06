@@ -1,6 +1,6 @@
 import pygame
 class Laser(pygame.sprite.Sprite):
-    def __init__(self, type, x,y, speed = 10):
+    def __init__(self, type, x,y, speed):
         super().__init__()
         self.type = type
         self.speed= speed

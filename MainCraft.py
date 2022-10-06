@@ -13,9 +13,10 @@ class MainCraft(pygame.sprite.Sprite):
         self.lasers = pygame.sprite.Group()
         self.laser_sound_effect = pygame.mixer.Sound('assets/audio/laser.wav')
         self.laser_sound_effect.set_volume(0.2)
+        self.laser_speed = 10
 
     def shoot_laser(self):
-        self.lasers.add(Laser("yellow", self.rect.x, self.rect.y+50))
+        self.lasers.add(Laser("yellow", self.rect.x, self.rect.y+50, self.laser_speed))
         self.laser_sound_effect.play()
     def player_input(self):
         self.current_time = pygame.time.get_ticks()

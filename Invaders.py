@@ -3,7 +3,7 @@ from random import choice, randint
 from Laser import Laser
 
 class Invader(pygame.sprite.Sprite):
-    def __init__(self, x, y,pace=randint(1,7), speed=100):
+    def __init__(self, x, y,pace=randint(1,7), speed=200):
         super().__init__()
         self.invader_type = choice(['blue', 'green', 'red'])
         if self.invader_type == 'red':
@@ -18,7 +18,6 @@ class Invader(pygame.sprite.Sprite):
 
 
         self.mask = pygame.mask.from_surface(self.image)
-        self.lasers = pygame.sprite.Group()
         self.direction = -1
         self.pace_size = pace
         self.pace_count = 0
@@ -42,6 +41,5 @@ class Invader(pygame.sprite.Sprite):
                 self.pace_count = 0
                 self.pace_size = randint(1,7)
                 self.turn_after = randint(1,4)
-
     def update(self):
         self.animate_invader()
