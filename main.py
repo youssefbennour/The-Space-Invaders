@@ -7,8 +7,9 @@ WIDTH, HEIGHT = 750, 650
 CRAFT_SPEED = 10
 MAX_Y_POS = [500, 400]
 INITIAL_INVADER_TIMER = 5000
-
 #end constants
+
+#variables initial values
 lives = 5
 alive_invaders = 15
 level = 1
@@ -17,12 +18,15 @@ increasingFactor = 1.0
 laser_speed = 10
 
 #functions
+
+#clear everything in game
 def reset_game():
     craft.empty()
     craft.add(MainCraft(CRAFT_SPEED))
     invaders_group.empty()
     lasers_group.empty()
 
+#when he loses, we give the player the option to try again from the latest level he's reached
 def check_try_again():
     global game_active, try_again,lives
     if lives<=0:
@@ -31,12 +35,13 @@ def check_try_again():
         lives = 5
         reset_game()
 
+#level up
 def change_level():
     global lives, alive_invaders, level, increasingFactor, laser_speed
     if alive_invaders <= 0:
         level += 1
-        increasingFactor += 0.2
-        alive_invaders = int(15*increasingFactor)
+        increasingFactor += 0.2 #In this and the next line of code I'm just making things complex Idk why
+        alive_invaders = int(15*increasingFactor) #Increase The number of "To be killed invaders" in order to pass to next level
         reset_game()
         lives = 5
         laser_speed += 2
@@ -44,6 +49,7 @@ def change_level():
         return True
     return False
 
+#check for collision between different types of sprite in handles remaining craft health and alive invaders
 def collision():
     global alive_invaders, lives
     craftLaserCollision = pygame.sprite.spritecollide(craft.sprite, lasers_group, True, pygame.sprite.collide_mask)
@@ -72,6 +78,9 @@ def collision():
             if invader.rect.top>= 650:
                 lives -= 1
 
+"""Making things complex once more
+   generate enemies at a different vertical position
+"""
 fromY = 100
 toY = 0
 def generate_enemies(fromY, toY):
@@ -87,6 +96,7 @@ def generate_enemies(fromY, toY):
     return fromY, toY
 
 
+#display health bar
 def health_bar(x,y,lives):
     y += 30
     red_surface = pygame.Surface([100,10])
@@ -98,7 +108,7 @@ def health_bar(x,y,lives):
     screen.blit(red_surface, red_rect)
     screen.blit(green_surface, green_rect)
 
-
+#explosion effect for mainLaser collision with invaders
 def explosion_stuff(x,y, screen):
     explosion_group.add(Explosion(x, y, screen))
     explosion_sound.play()
@@ -112,6 +122,7 @@ def display_level(level):
     level_surface = secondaryFont.render('level: '+str(level), False, (255,255,255))
     level_rect = level_surface.get_rect(topleft=(0,0))
     screen.blit(level_surface, level_rect)
+
 def display_levelup(level):
     level_passed_surface1 = secondaryFont.render("Congrats, you've passed level "+str(level)+" !!", False, (255,255,255))
     level_passed_surface2 = secondaryFont.render("Press the  Space key to enter level "+str(level+1), False, (255,255,255))
@@ -174,7 +185,7 @@ while True:
                 invader_shoot_timer = current_time
                 random_invader  = choice(invaders_group.sprites())
                 if random_invader.rect.top > 0:
-                      lasers_group.add(Laser(random_invader.invader_type, random_invader.rect.x,random_invader.rect.y, laser_speed))
+                      lasers_group.add(Laser(random_invader.invader_type, random_invader.rect.center[0],random_invader.rect.center[1], laser_speed))
 
         if level_up and event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
             level_up= False
@@ -192,6 +203,7 @@ while True:
     elif  game_active:
         display_score(lives)
         display_level(level)
+
         craft.sprite.lasers.draw(screen)
         lasers_group.update()
         lasers_group.draw(screen)
@@ -204,10 +216,13 @@ while True:
 
         explosion_group.update()
         explosion_group.draw(screen)
+
         collision()
 
         check_try_again()
+
         level_up = change_level()
+
         health_bar(craft.sprite.rect.bottomleft[0], craft.sprite.rect.bottomleft[1], lives )
 
     if  not game_active and try_again:

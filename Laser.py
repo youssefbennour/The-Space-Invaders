@@ -9,13 +9,13 @@ class Laser(pygame.sprite.Sprite):
             self.rect = self.image.get_rect(bottomleft=(x,y))
         elif type=="red":
             self.image = pygame.image.load('assets/pixel_laser_red.png').convert_alpha()
-            self.rect = self.image.get_rect(topleft=(x,y))
+            self.rect = self.image.get_rect(center=(x,y))
         elif type =="blue":
             self.image = pygame.image.load('assets/pixel_laser_blue.png').convert_alpha()
-            self.rect = self.image.get_rect(topleft=(x,y))
+            self.rect = self.image.get_rect(center=(x,y))
         elif type =="green":
             self.image = pygame.image.load('assets/pixel_laser_green.png').convert_alpha()
-            self.rect = self.image.get_rect(topleft=(x,y))
+            self.rect = self.image.get_rect(center=(x,y))
 
         self.mask = pygame.mask.from_surface(self.image)
 
