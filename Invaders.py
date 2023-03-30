@@ -7,7 +7,7 @@ class Invader(pygame.sprite.Sprite):
         super().__init__()
         self.invader_type = choice(['blue', 'green', 'red'])
         if self.invader_type == 'red':
-            self.image = pygame.image.load('assets/pixel_ship_red_small.png').convert_alpha()
+            self.image = pygame.image.load('assets/ghassen.png').convert_alpha()
             self.rect = self.image.get_rect(bottomleft= (x,y))
         elif self.invader_type == 'blue':
             self.image = pygame.image.load('assets/pixel_ship_blue_small.png').convert_alpha()

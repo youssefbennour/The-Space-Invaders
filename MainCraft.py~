@@ -1,3 +1,4 @@
+from curses import KEY_RIGHT
 from Laser import Laser
 import pygame
 
